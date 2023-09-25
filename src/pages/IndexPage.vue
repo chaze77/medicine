@@ -46,8 +46,10 @@
 
           <div class="needles" style="display: flex;">
             <div>
-              <q-btn :label="'Спр.' + store.needlesStore.catalogName" flat @click="showReferenceDialog('needlesStore')" />
-              <q-btn @click="showReferenceDialog('needlesStore')" color="primary">
+              <q-btn :label="'Спр.' + store.needlesStore.catalogName" flat @click="showReferenceDialog('needlesStore')"
+                :disabled="store.selectedInjection !== 'Игла'" />
+              <q-btn @click="showReferenceDialog('needlesStore')" color="primary"
+                :disabled="store.selectedInjection !== 'Игла'">
                 <q-icon name="menu_open" />
               </q-btn>
               <reference-dialog v-model="referenceDialogVisibleForNeedles" :store="store.needlesStore" />
@@ -55,19 +57,21 @@
 
             <div>
               <q-btn :label="'Спр.' + store.needlesTypeStore.catalogName" flat
-                @click="showReferenceDialog('needlesTypeStore')" />
-              <q-btn @click="showReferenceDialog('needlesTypeStore')" color="primary">
+                @click="showReferenceDialog('needlesTypeStore')" :disabled="store.selectedInjection !== 'Игла'" />
+              <q-btn @click="showReferenceDialog('needlesTypeStore')" color="primary"
+                :disabled="store.selectedInjection !== 'Игла'">
                 <q-icon name="menu_open" />
               </q-btn>
               <reference-dialog v-model="referenceDialogVisibleForNeedlesType" :store="store.needlesTypeStore" />
             </div>
           </div>
 
-          <div class="needles" style="display: flex;">
+          <div class="catheters" style="display: flex;">
             <div>
               <q-btn :label="'Спр.' + store.cathetersStore.catalogName" flat
-                @click="showReferenceDialog('cathetersStore')" />
-              <q-btn @click="showReferenceDialog('cathetersStore')" color="primary">
+                @click="showReferenceDialog('cathetersStore')" :disabled="store.selectedInjection !== 'Катетер'" />
+              <q-btn @click="showReferenceDialog('cathetersStore')" color="primary"
+                :disabled="store.selectedInjection !== 'Катетер'">
                 <q-icon name="menu_open" />
               </q-btn>
               <reference-dialog v-model="referenceDialogVisibleForCatheters" :store="store.cathetersStore" />
@@ -75,15 +79,15 @@
 
             <div>
               <q-btn :label="'Спр.' + store.cathetersTypeStore.catalogName" flat
-                @click="showReferenceDialog('cathetersTypeStore')" />
-              <q-btn @click="showReferenceDialog('cathetersTypeStore')" color="primary">
+                @click="showReferenceDialog('cathetersTypeStore')" :disabled="store.selectedInjection !== 'Катетер'" />
+              <q-btn @click="showReferenceDialog('cathetersTypeStore')" color="primary"
+                :disabled="store.selectedInjection !== 'Катетер'">
                 <q-icon name="menu_open" />
               </q-btn>
               <reference-dialog v-model="referenceDialogVisibleForCathetersType" :store="store.cathetersTypeStore" />
             </div>
           </div>
-
-
+          <div v-for="element in prescription">{{ element.name }}</div>
         </div>
       </div>
     </div>
@@ -98,6 +102,7 @@ import {
   programs, injections
 } from "../constants/constants";
 import ReferenceDialog from "../components/ReferenceDialog.vue";
+import { prescription } from "../stores/arrayStore/"
 
 export default {
   name: "IndexPage",
@@ -167,7 +172,8 @@ export default {
       referenceDialogVisibleForNeedles,
       referenceDialogVisibleForNeedlesType,
       referenceDialogVisibleForCatheters,
-      referenceDialogVisibleForCathetersType
+      referenceDialogVisibleForCathetersType,
+      prescription
     };
   },
 };

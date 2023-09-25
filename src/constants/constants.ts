@@ -53,37 +53,116 @@ export const needlesType: IProgram[] = [
   { id: "2", name: "Артериальные" },
 ];
 
-export const handbookItems = [
-  {
-    storeName: "dialyzers",
-    catalogName: "Диализаторы",
-    withInput: false,
-  },
-  {
-    storeName: "hubs",
-    catalogName: "Хабы",
-    withInput: false,
-  },
-  {
-    storeName: "catheters",
-    catalogName: "Катетеры",
-    withInput: false,
-  },
-  {
-    storeName: "cathetersType",
-    catalogName: "Типы катетеров",
-    withInput: false,
-  },
-  {
-    storeName: "needles",
-    catalogName: "Иглы",
-    withInput: false,
-  },
-  {
-    storeName: "needlesType",
-    catalogName: "Типы игл",
-    withInput: false,
-  },
-];
+// export const handbookItems = [
+//   {
+//     storeName: "dialyzers",
+//     catalogName: "Диализаторы",
+//     withInput: false,
+//   },
+//   {
+//     storeName: "hubs",
+//     catalogName: "Хабы",
+//     withInput: false,
+//   },
+//   {
+//     storeName: "catheters",
+//     catalogName: "Катетеры",
+//     withInput: false,
+//   },
+//   {
+//     storeName: "cathetersType",
+//     catalogName: "Типы катетеров",
+//     withInput: false,
+//   },
+//   {
+//     storeName: "needles",
+//     catalogName: "Иглы",
+//     withInput: false,
+//   },
+//   {
+//     storeName: "needlesType",
+//     catalogName: "Типы игл",
+//     withInput: false,
+//   },
+// ];
 
-export default handbookItems;
+// export default handbookItems;
+
+// // Определение интерфейса для элемента справочника
+// interface IHandbookItem {
+//   storeName: string;
+//   catalogName: string;
+//   withInput: boolean;
+//   data: IProgram[]; // Массив данных для хранилища
+// }
+
+// // Создание массива данных для хранилищ
+// const handbookItems: IHandbookItem[] = [
+//   {
+//     storeName: "dialyzers",
+//     catalogName: "Диализаторы",
+//     withInput: false,
+//     data: [
+//       { id: "1", name: "Диализатор 1" },
+//       { id: "2", name: "Диализатор 2" },
+//       { id: "3", name: "Диализатор 3" },
+//       // Другие данные для диализаторов
+//     ],
+//   },
+//   {
+//     storeName: "hubs",
+//     catalogName: "Концентраторы",
+//     withInput: true,
+//     data: [
+//       { id: "1", name: "Концентратор 1" },
+//       { id: "2", name: "Концентратор 2" },
+//     ],
+//   },
+//   {
+//     storeName: "catheters",
+//     catalogName: "Катетеры",
+//     withInput: false,
+//     data: [
+//       { id: "1", name: "Катетер размер 1" },
+//       { id: "2", name: "Катетер размер 2" },
+//       { id: "3", name: "Катетер размер 3" },
+//       { id: "4", name: "Катетер размер 4" },
+//     ],
+//   },
+//   {
+//     storeName: "cathetersType",
+//     catalogName: "Типы Катетеров",
+//     withInput: false,
+//     data: [
+//       { id: "1", name: "Катетер  Фолея" },
+//       { id: "2", name: "Катетер  Малеко" },
+//       { id: "3", name: "Катетер  Пацерра" },
+//       { id: "4", name: "Катетер  Тиманна" },
+//       { id: "5", name: "Катетер  Мелатоне" },
+//     ],
+//   },
+//   {
+//     storeName: "needles",
+//     catalogName: "Иглы",
+//     withInput: false,
+//     data: [
+//       { id: "1", name: "Игла  размер 1" },
+//       { id: "2", name: "Игла  размер 2" },
+//       { id: "3", name: "Игла  размер 3" },
+//       { id: "4", name: "Игла  размер 4" },
+//     ],
+//   },
+//   {
+//     storeName: "needlesType",
+//     catalogName: "Типы игл",
+//     withInput: false,
+//     data: [
+//       { id: "1", name: "Венозные" },
+//       { id: "2", name: "Артериальные" },
+//     ],
+//   },
+
+//   // Добавьте данные для других справочников аналогичным образом
+// ];
+
+// export default handbookItems;

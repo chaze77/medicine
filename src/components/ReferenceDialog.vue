@@ -22,6 +22,9 @@
                         <q-item-section side>
                             <q-btn flat icon="delete" @click="removeEntry(entry.id)" />
                         </q-item-section>
+                        <q-item-section side>
+                            <q-btn flat icon="keyboard_arrow_right" @click="selectEntryAndAddToPrescription(entry.id)" />
+                        </q-item-section>
                     </q-item>
                 </q-list>
             </q-card-section>
@@ -87,6 +90,23 @@ export default defineComponent( {
             items.value = newArray;
         } );
 
+        const selectEntry = ( id ) => {
+            props.store.selectEntry( id );
+        };
+
+        console.log( selectEntry );
+
+        const addToPrescription = () => {
+            props.store.addToPrescription();
+        };
+
+        const selectEntryAndAddToPrescription = ( id ) => {
+            selectEntry( id );
+            addToPrescription();
+            console.log( 'проверка' );
+        };
+
+
 
         return {
             closeDialog,
@@ -95,7 +115,10 @@ export default defineComponent( {
             removeEntry,
             newEntry,
             searchText,
-            filteredItems
+            filteredItems,
+            selectEntry,
+            addToPrescription,
+            selectEntryAndAddToPrescription
         };
     },
 } );
