@@ -4,6 +4,7 @@ import { ref, Ref } from "vue";
 interface Entry {
   id: string;
   name: string;
+  category?: string;
   // Другие поля записи, если они есть
 }
 
@@ -11,6 +12,8 @@ interface Entry {
 interface ArrayStore {
   array: Ref<Entry[]>;
   catalogName: string;
+  storeName: string;
+  withInput: boolean;
 
   addEntry: (newEntry: Entry) => void;
   removeEntryById: (id: string) => void;
@@ -20,15 +23,15 @@ export const prescription = ref<Entry[]>([]);
 
 export const createArrayStore = (
   initialArray: Entry[],
-  catalogName: string
+  catalogName: string,
+  storeName: string,
+  withInput: boolean
 ): ArrayStore => {
   const array = ref(initialArray);
-  const selectedEntryId = ref(null);
+  // Добавляем переменную для хранения inputValue
 
   const addEntry = (newEntry: Entry) => {
-    // Генерируем уникальный ID для новой записи (например, с использованием текущей даты и времени)
     newEntry.id = Date.now().toString();
-    // Добавляем новую запись в массив
     array.value.push(newEntry);
   };
 
@@ -36,15 +39,17 @@ export const createArrayStore = (
     array.value = array.value.filter((entry) => entry.id !== id);
   };
 
-  const selectEntry = (id: string) => {
-    selectedEntryId.value = id;
-  };
-
-  const addToPrescription = () => {
+  const addToPrescription = (selectedEntryId: string) => {
     const selectedEntry = array.value.find(
-      (entry) => entry.id === selectedEntryId.value
+      (entry) => entry.id === selectedEntryId
     );
     if (selectedEntry) {
+      const category = selectedEntry.category;
+
+      prescription.value = prescription.value.filter(
+        (item) => item.category !== category
+      );
+
       prescription.value.push(selectedEntry);
     }
   };
@@ -54,9 +59,8 @@ export const createArrayStore = (
     addEntry,
     removeEntryById,
     catalogName,
-    selectEntry,
+    storeName,
+    withInput,
     addToPrescription,
   };
 };
-
-console.log(prescription.value);

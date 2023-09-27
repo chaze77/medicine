@@ -23,7 +23,7 @@
                             <q-btn flat icon="delete" @click="removeEntry(entry.id)" />
                         </q-item-section>
                         <q-item-section side>
-                            <q-btn flat icon="keyboard_arrow_right" @click="selectEntryAndAddToPrescription(entry.id)" />
+                            <q-btn flat icon="keyboard_arrow_right" @click="addToPrescription(entry.id)" />
                         </q-item-section>
                     </q-item>
                 </q-list>
@@ -37,7 +37,6 @@
 </template>
   
 <script>
-
 import { defineComponent, ref, watch, computed } from 'vue';
 
 export default defineComponent( {
@@ -90,22 +89,9 @@ export default defineComponent( {
             items.value = newArray;
         } );
 
-        const selectEntry = ( id ) => {
-            props.store.selectEntry( id );
+        const addToPrescription = ( selectedEntryId, ) => {
+            props.store.addToPrescription( selectedEntryId );
         };
-
-        console.log( selectEntry );
-
-        const addToPrescription = () => {
-            props.store.addToPrescription();
-        };
-
-        const selectEntryAndAddToPrescription = ( id ) => {
-            selectEntry( id );
-            addToPrescription();
-            console.log( 'проверка' );
-        };
-
 
 
         return {
@@ -116,9 +102,7 @@ export default defineComponent( {
             newEntry,
             searchText,
             filteredItems,
-            selectEntry,
             addToPrescription,
-            selectEntryAndAddToPrescription
         };
     },
 } );
