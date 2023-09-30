@@ -3,6 +3,7 @@ interface Entry {
   id: string;
   name: string;
   category?: string;
+  bigCategory?: string;
   // Другие поля записи, если они есть
 }
 // Определение типа для записи

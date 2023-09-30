@@ -1,19 +1,43 @@
 <template>
-  <q-page>
-    <div class="q-pa-md d-flex flex-center">
-      <div class="title">
-        <q-item class="text-subtitle1">Сеанс гемодиализа</q-item>
-        <q-item class="text-subtitle2">Назначения сеанса гемодиализа</q-item>
-      </div>
-      <ProgramList />
-      <DialyzersAndHubsList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
-      <injectionList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
-      <BicarbonateValuesList :open-unit-dialog="openUnitDialog" />
+  <q-page class="q-pa-md d-flex flex-center justify-center">
+    <div class="container">
+      <q-card-section class="title_container">
+        <p class="title">Сеанс гемодиализа</p>
+        <p class="lable">Номер месяца</p>
+      </q-card-section>
+      <q-card-section>
+        <p class="title">Назначение сеанса гемодиализа</p>
+      </q-card-section>
 
-      <div><q-btn @click="saveData">Сформировать сеанс</q-btn></div>
+      <q-card-section>
+        <ProgramList />
+      </q-card-section>
+      <q-card-section>
+        <DialyzersAndHubsList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName"
+          :targetArray="prescription" />
+      </q-card-section>
+      <q-card-section>
+        <injectionList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName"
+          :targetArray="prescription" />
+      </q-card-section>
+      <q-card-section>
+        <BicarbonateValuesList :open-unit-dialog="openUnitDialog" />
+      </q-card-section>
 
+      <q-card-section>
+        <q-btn class="save-btn" @click="saveData">Сформировать сеанс</q-btn>
+      </q-card-section>
+      <Reciept />
+      <q-card-section class="title_container">
+        <p class="title">Назначение после сеанса</p>
+      </q-card-section>
+
+      <q-card-section>
+        <Medication :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
+      </q-card-section>
     </div>
-    <Reciept />
+
+
   </q-page>
 </template>
 
@@ -25,6 +49,7 @@ import ProgramList from "../components/ProgramList.vue"
 import injectionList from "../components/InjectionList.vue"
 import DialyzersAndHubsList from "../components/DialyzersAndHubsList.vue"
 import BicarbonateValuesList from "../components/BicarbonateValuesList.vue"
+import Medication from "../components/after/Medications.vue"
 
 export default {
   name: "IndexPage",
@@ -33,11 +58,14 @@ export default {
     injectionList,
     DialyzersAndHubsList,
     Reciept,
-    BicarbonateValuesList
+    BicarbonateValuesList,
+    Medication
   },
   setup() {
 
     const store = useRootStore();
+
+
 
     const showReferenceDialog = ( arrayStore ) => {
       arrayStore.referenceDialogVisible = true;
@@ -48,15 +76,25 @@ export default {
       descBookStore.unitDialogVisible = true;
     }
 
-    function getCategoryName( storeName ) {
+    function getCategoryName( storeName, targerArray ) {
+      // console.log( 'проверка', storeName );
       const selectedEntry = prescription.value.find( ( item ) => item.category === storeName );
       return selectedEntry ? selectedEntry.name : null;
     }
 
+
+
+    console.log( "prescription", prescription.value );
+
     const saveData = () => {
-      store.addInputValueToPrescription()
-      store.addSessionDataToPrescription()
-      console.log( 'done' );
+      console.log( prescription.value.length );
+      if ( prescription.value.length < 7 ) {
+        store.addInputValueToPrescription()
+        store.addSessionDataToPrescription()
+        console.log( 'done' );
+
+      }
+
     }
 
 
@@ -71,23 +109,18 @@ export default {
 };
 </script>
 
-<style scoped>
-.title {
+<style lang="scss" scoped>
+@import "../css/app.scss";
+
+
+.title_container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20%;
 }
 
-.q-btn {
-  width: 160px;
-  margin: 20px;
-  border: 1px solid grey;
-}
-
-.q-btn:hover {
-  border: 2px solid #10ad6f;
-}
-
-.active {
-  border: 2px solid #00804d;
+.save-btn {
+  border: 1px solid grey
 }
 </style>

@@ -2,35 +2,33 @@
     <q-dialog v-model="modelValue">
         <q-card>
             <q-card-section>
-                <!-- Здесь разместите содержимое справочника -->
-                <h6>{{ store.catalogName }}</h6>
+                <h6 class="title">{{ store.catalogName }}</h6>
 
-                <div class="searchInput">
+                <q-btn label="Закрыть" @click="closeDialog" class="close-btn" />
+
+
+                <div class="inputs">
                     <q-input v-model="searchText" label="Поиск позиции по первым символам" outlined />
                     <q-btn icon="search" />
                 </div>
 
-                <div class="addInput">
+                <div class="inputs">
                     <q-input v-model="newEntry" label="Добавить новую запись" outlined />
                     <q-btn icon="add" @click="addEntryFromButton(newEntry)" />
                 </div>
 
                 <q-list>
-                    <q-item v-for="entry in filteredItems" :key="entry.id" clickable>
-                        <!-- Выводите записи и иконку "Удалить" -->
-                        {{ entry.name }}
-                        <q-item-section side>
-                            <q-btn flat icon="delete" @click="removeEntry(entry.id)" />
-                        </q-item-section>
-                        <q-item-section side>
-                            <q-btn flat icon="keyboard_arrow_right" @click="addToPrescription(entry.id)" />
-                        </q-item-section>
+                    <q-item v-for="entry in filteredItems" :key="entry.id" clickable class="book-items">
+                        <p class="title-items">{{ entry.name }}</p>
+                        <q-btn flat icon="delete" @click="removeEntry(entry.id)" />
+                        <q-btn flat icon="keyboard_arrow_right" @click="addToPrescription(entry.id)" />
+
                     </q-item>
                 </q-list>
             </q-card-section>
             <q-card-actions align="left">
                 <!-- Используйте @click, чтобы закрыть диалоговое окно -->
-                <q-btn label="Закрыть" color="primary" @click="closeDialog" />
+
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -38,6 +36,7 @@
   
 <script>
 import { defineComponent, ref, watch, computed } from 'vue';
+import { prescription } from '../stores/arrayStore';
 
 export default defineComponent( {
     props: {
@@ -108,10 +107,31 @@ export default defineComponent( {
 } );
 </script>
 
-<style scoped>
-.addInput,
-.searchInput {
+<style lang="scss" scoped>
+@import "../css/app.scss";
+
+.inputs {
     display: flex;
-    /* Здесь исправлена ошибка. */
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.book-items {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.close-btn {
+    margin-bottom: 20px;
+    border: 1px solid gray
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.title-items {
+    width: 200px;
 }
 </style>

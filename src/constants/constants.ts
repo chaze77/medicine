@@ -1,8 +1,10 @@
 // Определение интерфейса для массива программ
 interface IProgram {
   id: string;
+  img?: string;
   name: string;
   category?: string | undefined;
+  bigCategory?: string | undefined;
   value?: number | undefined;
 }
 
@@ -12,17 +14,22 @@ interface IHandbookItemInjection {
 }
 // Создание константы programs с массивом программ
 export const programs: IProgram[] = [
-  { id: "1", name: "HD", category: "programs" },
-  { id: "2", name: "HDF", category: "programs" },
-  { id: "3", name: "UF", category: "programs" },
+  { id: "1", name: "HD", category: "programs", bigCategory: "programs" },
+  { id: "2", name: "HDF", category: "programs", bigCategory: "programs" },
+  { id: "3", name: "UF", category: "programs", bigCategory: "programs" },
 ];
 
 export const injections: IProgram[] = [
-  { id: "1", name: "Игла", category: "injections" },
-  { id: "2", name: "Катетер", category: "injections" },
+  { id: "1", name: "Игла", category: "injections", bigCategory: "injections" },
+  {
+    id: "2",
+    name: "Катетер",
+    category: "injections",
+    bigCategory: "injections",
+  },
 ];
 
-interface IHandbookItem {
+export interface IHandbookItem {
   storeName: string;
   catalogName: string;
   withInput?: boolean;
@@ -36,9 +43,24 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Диализаторы",
     withInput: false,
     data: [
-      { id: "1", name: "Диализатор 1", category: "dialyzers" },
-      { id: "2", name: "Диализатор 2", category: "dialyzers" },
-      { id: "3", name: "Диализатор 3", category: "dialyzers" },
+      {
+        id: "1",
+        name: "Диализатор1",
+        category: "dialyzers",
+        bigCategory: "dialyzers",
+      },
+      {
+        id: "2",
+        name: "Диализатор2",
+        category: "dialyzers",
+        bigCategory: "dialyzers",
+      },
+      {
+        id: "3",
+        name: "Диализатор3",
+        category: "dialyzers",
+        bigCategory: "dialyzers",
+      },
       // Другие данные для диализаторов
     ],
   },
@@ -47,8 +69,8 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Концентраторы",
     withInput: true,
     data: [
-      { id: "1", name: "Концентратор 1", category: "hubs" },
-      { id: "2", name: "Концентратор 2", category: "hubs" },
+      { id: "1", name: "Концентратор1", category: "hubs", bigCategory: "hubs" },
+      { id: "2", name: "Концентратор2", category: "hubs", bigCategory: "hubs" },
     ],
   },
   {
@@ -56,10 +78,30 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Катетеры",
     withInput: false,
     data: [
-      { id: "1", name: "Катетер размер 1", category: "catheters" },
-      { id: "2", name: "Катетер размер 2", category: "catheters" },
-      { id: "3", name: "Катетер размер 3", category: "catheters" },
-      { id: "4", name: "Катетер размер 4", category: "catheters" },
+      {
+        id: "1",
+        name: "Катетер размер1",
+        category: "catheters",
+        bigCategory: "injection",
+      },
+      {
+        id: "2",
+        name: "Катетер размер2",
+        category: "catheters",
+        bigCategory: "injection",
+      },
+      {
+        id: "3",
+        name: "Катетер размер3",
+        category: "catheters",
+        bigCategory: "injection",
+      },
+      {
+        id: "4",
+        name: "Катетер размер4",
+        category: "catheters",
+        bigCategory: "injection",
+      },
     ],
   },
   {
@@ -67,11 +109,36 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Типы Катетеров",
     withInput: false,
     data: [
-      { id: "1", name: "Катетер  Фолея", category: "cathetersType" },
-      { id: "2", name: "Катетер  Малеко", category: "cathetersType" },
-      { id: "3", name: "Катетер  Пацерра", category: "cathetersType" },
-      { id: "4", name: "Катетер  Тиманна", category: "cathetersType" },
-      { id: "5", name: "Катетер  Мелатоне", category: "cathetersType" },
+      {
+        id: "1",
+        name: "Катетер  Фолея",
+        category: "cathetersType",
+        bigCategory: "injection",
+      },
+      {
+        id: "2",
+        name: "Катетер  Малеко",
+        category: "cathetersType",
+        bigCategory: "injection",
+      },
+      {
+        id: "3",
+        name: "Катетер  Пацерра",
+        category: "cathetersType",
+        bigCategory: "injection",
+      },
+      {
+        id: "4",
+        name: "Катетер  Тиманна",
+        category: "cathetersType",
+        bigCategory: "injection",
+      },
+      {
+        id: "5",
+        name: "Катетер  Мелатоне",
+        category: "cathetersType",
+        bigCategory: "injection",
+      },
     ],
   },
   {
@@ -79,10 +146,30 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Иглы",
     withInput: false,
     data: [
-      { id: "1", name: "Игла  размер 1", category: "needles" },
-      { id: "2", name: "Игла  размер 2", category: "needles" },
-      { id: "3", name: "Игла  размер 3", category: "needles" },
-      { id: "4", name: "Игла  размер 4", category: "needles" },
+      {
+        id: "1",
+        name: "Игла  размер1",
+        category: "needles",
+        bigCategory: "injection",
+      },
+      {
+        id: "2",
+        name: "Игла  размер2",
+        category: "needles",
+        bigCategory: "injection",
+      },
+      {
+        id: "3",
+        name: "Игла  размер3",
+        category: "needles",
+        bigCategory: "injection",
+      },
+      {
+        id: "4",
+        name: "Игла  размер4",
+        category: "needles",
+        bigCategory: "injection",
+      },
     ],
   },
   {
@@ -90,13 +177,47 @@ export const handbookItems: IHandbookItem[] = [
     catalogName: "Типы игл",
     withInput: false,
     data: [
-      { id: "1", name: "Венозные", category: "needlesType" },
-      { id: "2", name: "Артериальные", category: "needlesType" },
+      {
+        id: "1",
+        name: "Венозные",
+        category: "needlesType",
+        bigCategory: "injection",
+      },
+      {
+        id: "2",
+        name: "Артериальные",
+        category: "needlesType",
+        bigCategory: "injection",
+      },
     ],
   },
-
-  // Добавьте данные для других справочников аналогичным образом
+  {
+    storeName: "drugs",
+    catalogName: "Лекарственные препараты",
+    data: [
+      {
+        id: "1",
+        name: "Лекарственный препарат №1",
+        category: "drugs",
+        bigCategory: "drugs",
+      },
+      {
+        id: "2",
+        name: "Лекарственный препарат №2",
+        category: "drugs",
+        bigCategory: "drugs",
+      },
+      {
+        id: "3",
+        name: "Лекарственный препарат №3",
+        category: "drugs",
+        bigCategory: "drugs",
+      },
+    ],
+  },
 ];
+
+// Добавьте данные для других справочников аналогичным образом
 
 export const deskBook: IHandbookItem[] = [
   {
@@ -107,11 +228,13 @@ export const deskBook: IHandbookItem[] = [
         id: "1",
         name: "грамм",
         category: "unit",
+        bigCategory: "unit",
       },
       {
         id: "2",
         name: "литр",
         category: "unit",
+        bigCategory: "unit",
       },
     ],
   },
@@ -122,27 +245,70 @@ export const deskBook: IHandbookItem[] = [
     data: [
       {
         id: "1",
-        name: "антикогуляция 1",
+        name: "антикогуляция1",
         category: "antikogulant",
+        bigCategory: "antikogulant",
       },
       {
         id: "2",
-        name: "антикогуляция 2",
+        name: "антикогуляция2",
         category: "antikogulant",
+        bigCategory: "antikogulant",
       },
     ],
   },
 ];
 
 export const icons: IProgram[] = [
-  { id: "1", name: "computer", category: "program" },
-  { id: "2", name: "bloodtype", category: "dialyzers" },
-  { id: "3", name: "sanitizer", category: "hubs" },
-  { id: "4", name: "vaccines", category: "injection" },
-  { id: "6", name: "science", category: "catheters" },
-  { id: "7", name: "science", category: "bikorbonat" },
-  { id: "8", name: "terminal", category: "weight" },
-  { id: "9", name: "journal", category: "antikogulant" },
+  {
+    id: "1",
+    img: "computer",
+    name: "Программа",
+    category: "program",
+    bigCategory: "program",
+  },
+  {
+    id: "2",
+    img: "bloodtype",
+    name: "Диализатор",
+    category: "dialyzers",
+    bigCategory: "dialyzers",
+  },
+  {
+    id: "3",
+    img: "sanitizer",
+    name: "Концентратор обьем",
+    category: "hubs",
+    bigCategory: "hubs",
+  },
+  {
+    id: "4",
+    img: "vaccines",
+    name: "Игла/Катетер",
+    category: "injection",
+    bigCategory: "injection",
+  },
+  {
+    id: "5",
+    img: "science",
+    name: "Бикорбонат",
+    category: "bikorbonat",
+    bigCategory: "bikorbonat",
+  },
+  {
+    id: "6",
+    img: "science",
+    name: "Антикогуляция ед.",
+    category: "antikogulant",
+    bigCategory: "antikogulant",
+  },
+  {
+    id: "7",
+    img: "terminal",
+    name: "Сухой вес",
+    category: "weight",
+    bigCategory: "weight",
+  },
 ];
 
 export const handbookItemsInjection: IHandbookItemInjection[] = [
@@ -155,4 +321,8 @@ export const handbookItemsInjection: IHandbookItemInjection[] = [
 export const handbookItemsDialyzersAndHubs: IHandbookItemInjection[] = [
   { id: "1", catalogName: "Диализаторы" },
   { id: "2", catalogName: "Концентраторы" },
+];
+
+export const handbookItemsDrugs: IHandbookItemInjection[] = [
+  { id: "1", catalogName: "Лекарственные препараты" },
 ];

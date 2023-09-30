@@ -1,12 +1,22 @@
 <template>
-    <div class="handbooks">
-        <div v-for="(arrayStore, index) in orderedHandbookItems" :key="index">
-            <q-item class="text-subtitle2">{{ arrayStore.catalogName }}</q-item>
-            <q-btn :label="(getCategoryName(arrayStore.storeName) || 'Спр.' + arrayStore.catalogName)" flat />
-            <q-btn @click="showReferenceDialog(arrayStore)" color="primary">
-                <q-icon name="menu_open" />
-            </q-btn>
-            <q-input v-if="arrayStore.withInput" label="обьем" v-model="inputValue" />
+    <div v-for="(arrayStore, index) in orderedHandbookItems" :key="index" class="dialyzers">
+        <div class="items_block">
+            <div class="dialyzers_items">
+                <q-item class="lable">{{ arrayStore.catalogName }}</q-item>
+                <span class="items">
+                    {{ getCategoryName(arrayStore.storeName) || `Спр. '${arrayStore.catalogName}'` }}</span>
+            </div>
+
+            <div class="dialyzers_items">
+                <q-btn class="ibtn" @click="showReferenceDialog(arrayStore)">
+                    <q-icon name="menu_open" />
+                </q-btn>
+            </div>
+
+            <div v-if="arrayStore.withInput" class="dialyzers_items">
+                <q-item class="lable" style="text-align: center;">Обьем</q-item>
+                <q-input class="inp" v-model="inputValue" outlined suffix="л" />
+            </div>
             <reference-dialog v-model="arrayStore.referenceDialogVisible" :store="arrayStore" />
         </div>
     </div>
@@ -52,18 +62,24 @@ export default {
 }
 </script>
 
-<style>
-.q-btn {
-    width: 160px;
-    margin: 20px;
-    border: 1px solid grey;
+<style lang="scss" scoped>
+@import "../css/app.scss";
+
+.dialyzers {
+    width: 100%;
+
 }
 
-.q-btn:hover {
-    border: 2px solid #10ad6f;
+.items_block {
+    display: flex;
+    gap: 2%;
+    margin-bottom: 20px;
+
 }
 
-.active {
-    border: 2px solid #00804d;
+.dialyzers_items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 </style>

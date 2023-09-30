@@ -1,40 +1,46 @@
 <template>
-    <div class="bikorbonat">
+    <div class="bkr-container">
         <div v-for="(descBookStore, index) in descBookStores" :key="index">
-            <template v-if="descBookStore.catalogName === 'Бикорбонат'">
-                <q-item class="text-subtitle2">Бикарбонат</q-item>
-                <q-btn @click="openUnitDialog(descBookStore)" color="primary">
+            <div v-if="descBookStore.catalogName === 'Бикорбонат'" class="bkr-items">
+                <div class="bkr-items-inner">
+                    <q-item class="lable">Бикарбонат</q-item>
+                    <q-input class="inp" outlined v-model="bikorbonat" type="unit" :suffix="unitSuffix" />
+                </div>
+
+                <q-btn @click="openUnitDialog(descBookStore)" class="ibtn">
                     <q-icon name="menu_open" />
                 </q-btn>
-                <q-input standout v-model="bikorbonat" type="unit" :suffix="unitSuffix">
-                </q-input>
-                <!-- Вставляем UnitDialog с передачей пропсов -->
-                <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
-            </template>
+            </div>
+            <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
         </div>
 
-        <div>
-            <q-item class="text-subtitle2">Сухой вес пациента</q-item>
-            <q-input standout v-model="patientWeight" type="unit" suffix="кг" />
+        <div class="bkr-items-inner">
+            <q-item class="lable patient">Сухой вес пациента</q-item>
+            <q-input class="inp" outlined v-model="patientWeight" type="unit" suffix="кг" />
         </div>
 
         <div v-for="(descBookStore, index) in descBookStores" :key="index">
-            <template v-if="descBookStore.catalogName === 'Антикоагуляция'">
-                <q-item class="text-subtitle2">Антикогуляция</q-item>
-                <q-btn>{{ antikogulant }}</q-btn>
-                <q-btn @click="openUnitDialog(descBookStore)" color="primary">
-                    <q-icon name="menu_open" />
-                </q-btn>
-                <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
-            </template>
+            <div v-if="descBookStore.catalogName === 'Антикоагуляция'">
+                <div class="bkr-items">
+                    <div class="bkr-items-inner">
+                        <q-item class="lable">Антикогуляция</q-item>
+                        <span class="items antikogulant-lable">{{ antikogulant || "Наименование" }}</span>
+                    </div>
+                    <q-btn class="ibtn" @click="openUnitDialog(descBookStore)">
+                        <q-icon name="menu_open" />
+                    </q-btn>
+                    <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
+                </div>
+
+            </div>
             <div>
             </div>
         </div>
-        <div>
-            <q-item class="text-subtitle2">Обьем</q-item>
-            <q-input standout v-model="volume" type="unit" suffix="ед" />
-        </div>
 
+        <div class="bkr-items-inner">
+            <q-item class="lable">Обьем</q-item>
+            <q-input class="inp" outlined v-model="volume" type="unit" suffix="ед" />
+        </div>
     </div>
 </template>
 
@@ -97,6 +103,7 @@ export default {
             return unit.value === 'грамм' ? 'гр' : unit.value === 'литр' ? 'л' : '';
         } );
 
+
         return {
             descBookStores,
             unit,
@@ -110,18 +117,36 @@ export default {
 }
 </script>
 
-<style>
-.q-btn {
-    width: 160px;
-    margin: 20px;
-    border: 1px solid grey;
+<style lang="scss" scoped>
+@import "../css/app.scss";
+
+.bkr-container {
+    display: flex;
+    gap: 20px;
 }
 
-.q-btn:hover {
-    border: 2px solid #10ad6f;
+.bkr-container div:not(.bkr-items):nth-child(2),
+.bkr-container div:not(.bkr-items):nth-child(4) {
+    display: none;
 }
 
-.active {
-    border: 2px solid #00804d;
+.bkr-items {
+    display: flex;
+    gap: 20px;
+}
+
+.bkr-items-inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.patient {
+    width: 100px;
+}
+
+.antikogulant-lable {
+
+    width: clamp(150px, 15vw, 300px);
+
 }
 </style>

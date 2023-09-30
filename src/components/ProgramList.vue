@@ -1,10 +1,13 @@
 <template>
     <div class="program">
-        <q-item class="text-subtitle2">Программа аппарата</q-item>
-        <q-btn v-for="program in programsList" :key="program.id" flat @click="chooseProgram(program.name)"
-            :class="{ active: program.name === selectedProgram }">
-            {{ program.name }}
-        </q-btn>
+        <p class="lable">Программа аппарата</p>
+        <div class="buttons">
+            <q-btn class="btn" v-for="program in programsList" :key="program.id" flat @click="chooseProgram(program.name)"
+                :class="{ active: program.name === selectedProgram }">
+                {{ program.name }}
+            </q-btn>
+        </div>
+
     </div>
 </template>
 
@@ -34,18 +37,11 @@ export default {
 }
 </script>
 
-<style>
-.q-btn {
-    width: 160px;
-    margin: 20px;
-    border: 1px solid grey;
-}
+<style lang="scss" scoped>
+@import "../css/app.scss";
 
-.q-btn:hover {
-    border: 2px solid #10ad6f;
-}
-
-.active {
-    border: 2px solid #00804d;
+.buttons {
+    display: flex;
+    gap: 2%;
 }
 </style>

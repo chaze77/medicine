@@ -13,19 +13,20 @@ interface ArrayStore {
   array: Ref<Entry[]>;
   catalogName: string;
   storeName: string;
-  withInput: boolean;
+  withInput?: boolean;
 
   addEntry: (newEntry: Entry) => void;
   removeEntryById: (id: string) => void;
 }
 
 export const prescription = ref<Entry[]>([]);
+export const afterArray = ref<Entry[]>([]);
 
 export const createArrayStore = (
   initialArray: Entry[],
   catalogName: string,
   storeName: string,
-  withInput: boolean
+  withInput?: boolean
 ): ArrayStore => {
   const array = ref(initialArray);
   // Добавляем переменную для хранения inputValue
@@ -49,7 +50,6 @@ export const createArrayStore = (
       prescription.value = prescription.value.filter(
         (item) => item.category !== category
       );
-
       prescription.value.push(selectedEntry);
     }
   };

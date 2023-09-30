@@ -22,6 +22,7 @@ export const useRootStore = defineStore("root", () => {
       id: Date.now().toString(),
       name: programName,
       category: "program",
+      bigCategory: "program",
     });
   };
 
@@ -38,6 +39,7 @@ export const useRootStore = defineStore("root", () => {
       id: Date.now().toString(),
       name: injectionName,
       category: "injection",
+      bigCategory: "injection",
     });
   };
 
@@ -45,7 +47,8 @@ export const useRootStore = defineStore("root", () => {
     if (inputValue.value !== null) {
       prescription.value.push({
         category: "hubs",
-        id: Date.now().toString(), // Замените на реальную категорию
+        bigCategory: "hubs",
+        id: Date.now().toString(),
         name: inputValue.value,
       });
     }
@@ -56,27 +59,32 @@ export const useRootStore = defineStore("root", () => {
     const sessionDataValue = sessionData.value;
     prescription.value.push(
       {
-        category: "bikorbonat", // Замените на реальную категорию
+        bigCategory: "bikorbonat",
+        category: "bikorbonat",
         id: Date.now().toString(),
         name: sessionDataValue.bikorbonat,
       },
       {
-        category: "bikorbonat", // Замените на реальную категорию
+        bigCategory: "bikorbonat",
+        category: "bikorbonat",
         id: Date.now().toString(),
         name: sessionDataValue.unit,
       },
       {
-        category: "weight", // Замените на реальную категорию
+        bigCategory: "weight",
+        category: "weight",
         id: Date.now().toString(),
-        name: sessionDataValue.weight,
+        name: sessionDataValue.weight + "кг",
       },
       {
-        category: "antikogulant", // Замените на реальную категорию
+        bigCategory: "antikogulant",
+        category: "antikogulant",
         id: Date.now().toString(),
         name: sessionDataValue.antikogulant,
       },
       {
-        category: "antikogulant", // Замените на реальную категорию
+        bigCategory: "antikogulant",
+        category: "antikogulant",
         id: Date.now().toString(),
         name: sessionDataValue.volume,
       }
@@ -105,14 +113,9 @@ export const useRootStore = defineStore("root", () => {
     volume: null, // Объем
   });
 
-  // function setSessionData(data) {
-  //   this.sessionData.value = data;
-  // }
-
   return {
     selectedProgram,
     selectedInjection,
-    // concentratorInputValue,
     selectProgram,
     selectInjection,
     arrayStores,

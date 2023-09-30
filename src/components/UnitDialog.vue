@@ -1,10 +1,13 @@
 <template>
     <q-dialog v-model="modelValue">
-        <q-card>
+        <q-card class="container-card">
+            <div class="title-container">
+                <p class="title-book">Справочник {{ naming }}</p>
+            </div>
 
-            <q-item class="text-subtitle2">Справочник {{ naming }}</q-item>
             <div v-for="entry in items">
-                <q-item :key="entry.id" clickable @click="handleUnitSelection(entry.name, entry.category)">
+                <q-item style="padding-left: 10px;" :key="entry.id" clickable
+                    @click="handleUnitSelection(entry.name, entry.category)">
                     {{ entry.name }}
                 </q-item>
             </div>
@@ -49,4 +52,16 @@ export default defineComponent( {
 } );
 </script>
 
-<style scoped></style>
+<style  lang="scss" scoped>
+.title-container {
+    background-color: gray;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    .title-book {
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+    }
+}
+</style>

@@ -1,21 +1,28 @@
 <template>
     <div class="injection">
-        <q-item class="text-subtitle2">Тип инъекции</q-item>
-        <q-btn v-for="inject in injectionList" :key="inject.id" flat @click="chooseInjection(inject.name)"
-            :class="{ active: inject.name === selectedInjection }">
-            {{ inject.name }}
-        </q-btn>
+        <q-item class="lable">Тип инъекции</q-item>
+        <div class="btn-items">
+            <q-btn class="btn" v-for="inject in injectionList" :key="inject.id" flat @click="chooseInjection(inject.name)"
+                :class="{ active: inject.name === selectedInjection }">
+                {{ inject.name }}
+            </q-btn>
+        </div>
+
     </div>
 
-    <div class="handbooks">
+
+    <div class="injection-container">
         <div v-for="(arrayStore, index) in orederHandbooksItemsNext" :key="index">
-            <q-item class="text-subtitle2">{{ arrayStore.catalogName }}</q-item>
-            <q-btn :label="(getCategoryName(arrayStore.storeName) || 'Спр.' + arrayStore.catalogName)" flat
-                :disabled="!selectedInjection || !isItemActive(arrayStore)" />
-            <q-btn @click="showReferenceDialog(arrayStore)" color="primary"
-                :disabled="!selectedInjection || !isItemActive(arrayStore)">
-                <q-icon name="menu_open" />
-            </q-btn>
+            <div class="injection-items">
+                <span class="items">
+                    {{ getCategoryName(arrayStore.storeName) || `Спр. '${arrayStore.catalogName}'` }}</span>
+
+
+                <q-btn class="ibtn" @click="showReferenceDialog(arrayStore)"
+                    :disabled="!selectedInjection || !isItemActive(arrayStore)">
+                    <q-icon name="menu_open" />
+                </q-btn>
+            </div>
             <reference-dialog v-model="arrayStore.referenceDialogVisible" :store="arrayStore" />
         </div>
     </div>
@@ -52,8 +59,9 @@ export default {
         const orederHandbooksItemsNext = handbookItemsInjection.map( ( item ) => arrayStores.find( ( storeItem ) => storeItem.catalogName === item.catalogName ) );
 
         const isItemActive = ( arrayStore ) => {
-            if ( !selectedInjection.value ) return true; // Если инъекция не выбрана, все элементы активны
+            if ( !selectedInjection.value ) return true; // Если инъекция не выбрана, все элементы не активны
             if ( selectedInjection.value === "Игла" ) {
+                console.log( selectedInjection.value );
                 // Если выбрана инъекция "Игла", активируем элементы с catalogName "Иглы" и "Типы игл"
                 return arrayStore.catalogName === "Иглы" || arrayStore.catalogName === "Типы игл";
             }
@@ -61,7 +69,7 @@ export default {
                 // Если выбрана инъекция "Катетер", активируем элементы с catalogName "Катетеры" и "Типы Катетеров"
                 return arrayStore.catalogName === "Катетеры" || arrayStore.catalogName === "Типы Катетеров";
             }
-            return true; // Если выбрана другая инъекция, все элементы активны
+            return true;
         };
         return {
             injectionList,
@@ -75,18 +83,32 @@ export default {
 }
 </script>
 
-<style>
-.q-btn {
-    width: 160px;
-    margin: 20px;
-    border: 1px solid grey;
+<style lang="scss" scoped>
+@import "../css/app.scss";
+
+.btn-items {
+    display: flex;
+    gap: 2%;
 }
 
-.q-btn:hover {
-    border: 2px solid #10ad6f;
+.injection {
+    margin-bottom: 40px;
 }
 
-.active {
-    border: 2px solid #00804d;
+.injection-container {
+    display: flex;
+    flex-direction: row;
+    // border: 1px solid red;
+    flex-wrap: wrap;
+    gap: 5%;
+
+}
+
+.injection-items {
+    display: flex;
+    margin-bottom: 10px;
+    gap: 5%;
+    // border: 1px solid red;
+
 }
 </style>
