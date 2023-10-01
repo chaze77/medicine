@@ -7,7 +7,8 @@
 
             <div v-for="entry in items">
                 <q-item style="padding-left: 10px;" :key="entry.id" clickable
-                    @click="handleUnitSelection(entry.name, entry.category)">
+                    @click=" entry.group === '1' ?
+                        handleUnitSelection(entry.name, entry.category) : handleUnitSelectionDoses(entry.name, entry.category)">
                     {{ entry.name }}
                 </q-item>
             </div>
@@ -41,10 +42,15 @@ export default defineComponent( {
             closeDialog();
         }
 
+        function handleUnitSelectionDoses( enryName, category ) {
+            store.sessionDataDoses[ category ] = enryName;
+            closeDialog();
+        }
 
         return {
             closeDialog,
             handleUnitSelection,
+            handleUnitSelectionDoses,
             items,
             naming
         };

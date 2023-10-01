@@ -13,12 +13,10 @@
         <ProgramList />
       </q-card-section>
       <q-card-section>
-        <DialyzersAndHubsList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName"
-          :targetArray="prescription" />
+        <DialyzersAndHubsList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
       </q-card-section>
       <q-card-section>
-        <injectionList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName"
-          :targetArray="prescription" />
+        <injectionList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
       </q-card-section>
       <q-card-section>
         <BicarbonateValuesList :open-unit-dialog="openUnitDialog" />
@@ -27,13 +25,32 @@
       <q-card-section>
         <q-btn class="save-btn" @click="saveData">Сформировать сеанс</q-btn>
       </q-card-section>
-      <Reciept />
+      <q-card-section>
+        <Reciept />
+      </q-card-section>
+
+
       <q-card-section class="title_container">
         <p class="title">Назначение после сеанса</p>
       </q-card-section>
 
       <q-card-section>
-        <Medication :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
+        <Medication :show-reference-dialog="showReferenceDialog" />
+      </q-card-section>
+      <!-- :get-category-name="getCategoryNameDoses" -->
+      <q-card-section>
+        <Doses :open-unit-dialog="openUnitDialog" />
+      </q-card-section>
+
+      <q-card-section>
+        <NumberOfSeans />
+        <Dates />
+      </q-card-section>
+      <q-card-section>
+        <q-btn class="save-btn" @click="saveAfterData">Сформировать</q-btn>
+      </q-card-section>
+      <q-card-section>
+        <Table />
       </q-card-section>
     </div>
 
@@ -43,13 +60,18 @@
 
 <script>
 import { useRootStore } from "../stores/store";
-import { prescription } from "../stores/arrayStore/";
+
+import { prescription, afterArray } from "../stores/arrayStore/";
 import Reciept from "../components/Reciept.vue";
 import ProgramList from "../components/ProgramList.vue"
 import injectionList from "../components/InjectionList.vue"
 import DialyzersAndHubsList from "../components/DialyzersAndHubsList.vue"
 import BicarbonateValuesList from "../components/BicarbonateValuesList.vue"
 import Medication from "../components/after/Medications.vue"
+import Doses from "../components/after/Doses.vue"
+import NumberOfSeans from "../components/after/NumberOfSeans.vue"
+import Dates from "../components/after/Dates.vue"
+import Table from "../components/after/Table.vue"
 
 export default {
   name: "IndexPage",
@@ -59,7 +81,11 @@ export default {
     DialyzersAndHubsList,
     Reciept,
     BicarbonateValuesList,
-    Medication
+    Medication,
+    Doses,
+    NumberOfSeans,
+    Dates,
+    Table
   },
   setup() {
 
@@ -76,15 +102,17 @@ export default {
       descBookStore.unitDialogVisible = true;
     }
 
-    function getCategoryName( storeName, targerArray ) {
+    function getCategoryName( storeName ) {
       // console.log( 'проверка', storeName );
       const selectedEntry = prescription.value.find( ( item ) => item.category === storeName );
       return selectedEntry ? selectedEntry.name : null;
     }
 
-
-
-    console.log( "prescription", prescription.value );
+    // function getCategoryNameDoses( storeName ) {
+    //   // console.log( 'проверка', storeName );
+    //   const selectedEntry = afterArray.value.find( ( item ) => item.category === storeName );
+    //   return selectedEntry ? selectedEntry.name : null;
+    // }
 
     const saveData = () => {
       console.log( prescription.value.length );
@@ -92,18 +120,27 @@ export default {
         store.addInputValueToPrescription()
         store.addSessionDataToPrescription()
         console.log( 'done' );
-
       }
+    }
+
+
+    const saveAfterData = () => {
+      store.addSessionDataToAfterArray()
+
 
     }
 
+    console.log( afterArray.value );
 
     return {
       showReferenceDialog,
       prescription,
+      afterArray,
       getCategoryName,
+      // getCategoryNameDoses,
       openUnitDialog,
-      saveData
+      saveData,
+      saveAfterData
     };
   },
 };

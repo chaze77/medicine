@@ -21,7 +21,7 @@
                     <q-item v-for="entry in filteredItems" :key="entry.id" clickable class="book-items">
                         <p class="title-items">{{ entry.name }}</p>
                         <q-btn flat icon="delete" @click="removeEntry(entry.id)" />
-                        <q-btn flat icon="keyboard_arrow_right" @click="addToPrescription(entry.id)" />
+                        <q-btn flat icon="keyboard_arrow_right" @click="handleItemClick(entry)" />
 
                     </q-item>
                 </q-list>
@@ -37,6 +37,7 @@
 <script>
 import { defineComponent, ref, watch, computed } from 'vue';
 import { prescription } from '../stores/arrayStore';
+import { useRootStore } from "../stores/store"
 
 export default defineComponent( {
     props: {
@@ -50,6 +51,7 @@ export default defineComponent( {
             // Используйте $emit для отправки события обновления
             emit( 'update:modelValue', false );
         };
+        const mainStore = useRootStore()
         const items = ref( props.store.array );
         const newEntry = ref( "" );
         const searchText = ref( "" )
@@ -92,6 +94,27 @@ export default defineComponent( {
             props.store.addToPrescription( selectedEntryId );
         };
 
+        const addToAfterArray = ( selectedEntryId, ) => {
+            props.store.addToAfterArray( selectedEntryId );
+        };
+
+        const handleItemClick = ( entry ) => {
+            if ( entry.group === '1' ) {
+
+                addToPrescription( entry.id );
+            } else {
+                // Добавить entry в afterArray
+                mainStore.sessionDataDoses.drugs = entry.name;
+
+                console.log( mainStore.sessionDataDoses.drugs );
+            }
+        };
+
+        const update = mainStore.updateItem
+        // function handleUnitSelection( enryName, category ) {
+        //     store.sessionData[ category ] = enryName;
+        //     closeDialog();
+        // }
 
         return {
             closeDialog,
@@ -102,6 +125,10 @@ export default defineComponent( {
             searchText,
             filteredItems,
             addToPrescription,
+            addToAfterArray,
+            handleItemClick,
+            mainStore,
+            update
         };
     },
 } );

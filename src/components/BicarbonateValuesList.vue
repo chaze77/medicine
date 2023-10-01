@@ -147,6 +147,5 @@ export default {
 .antikogulant-lable {
 
     width: clamp(150px, 15vw, 300px);
-
 }
 </style>

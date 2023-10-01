@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { createArrayStore } from "./arrayStore";
 import { handbookItems, deskBook } from "../constants/constants";
-import { prescription } from "./arrayStore";
+import { prescription, afterArray } from "./arrayStore";
 import { createDeskBookStore } from "./deskBookStore";
 
 export const useRootStore = defineStore("root", () => {
@@ -54,7 +54,6 @@ export const useRootStore = defineStore("root", () => {
     }
   };
 
-  // Функция для добавления значений из sessionData в prescription
   const addSessionDataToPrescription = () => {
     const sessionDataValue = sessionData.value;
     prescription.value.push(
@@ -113,6 +112,50 @@ export const useRootStore = defineStore("root", () => {
     volume: null, // Объем
   });
 
+  const sessionDataDoses = ref({
+    drugDoses: null, // Выбранный бикарбонат
+    methodRoute: null,
+    drugs: null,
+  });
+  const addSessionDataToAfterArray = () => {
+    const sessionDataObject = {
+      id: Date.now().toString(),
+      drugs: sessionDataDoses.value.drugs,
+      drugDoses: sessionDataDoses.value.drugDoses,
+      methodRoute: sessionDataDoses.value.methodRoute,
+      selectedDays: selectedDays.value.join(","),
+      startDate: startDate.value,
+      endDate: endDate.value,
+      quantity: selectedDays.value.length,
+    }; // Обратите внимание на удаление запятой в этой строке
+
+    // Добавьте объект sessionDataObject в afterArray
+    afterArray.value.push(sessionDataObject);
+  };
+
+  const numberOfDays = ref([1, 2, 3, 4, 5, 6, 7]);
+
+  const selectedDays = ref([]);
+
+  const toggleDay = (day) => {
+    const index = selectedDays.value.indexOf(day);
+    if (index !== -1) {
+      selectedDays.value.splice(index, 1);
+    } else {
+      selectedDays.value.push(day);
+    }
+  };
+
+  const startDate = ref("");
+  const endDate = ref("");
+  // const setSelectedDays = () => {
+  //   afterArray.value.push(selectedDays.value);
+  // };
+
+  // const addDates = () => {
+  //   afterArray.value.push(startDate.value, endDate.value);
+  // };
+
   return {
     selectedProgram,
     selectedInjection,
@@ -122,7 +165,16 @@ export const useRootStore = defineStore("root", () => {
     inputValue,
     addInputValueToPrescription,
     sessionData,
+    sessionDataDoses,
     addSessionDataToPrescription,
     deskBookStores,
+    addSessionDataToAfterArray,
+    selectedDays,
+    numberOfDays,
+    toggleDay,
+    // setSelectedDays,
+    startDate,
+    endDate,
+    // addDates,
   };
 });
