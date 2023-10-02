@@ -21,7 +21,7 @@
 <script>
 import ReferenceDialog from "../../components/ReferenceDialog.vue"
 
-import { handbookItemsDrugs } from "../../constants/constants"
+import { handbookItemsDrugs } from "../../constants/catalog-names"
 import { useRootStore } from "../../stores/store"
 import { watch, ref } from "vue"
 
@@ -85,4 +85,4 @@ export default {
     flex-direction: column;
     justify-content: space-between;
 }
-</style>
+</style>../../constants/catalog-names

@@ -14,3 +14,10 @@ export interface IHandbookItem {
   withInput?: boolean;
   data: IProgram[]; // Массив данных для хранилища
 }
+
+export interface IHandbookItemInjection {
+  id: string;
+  catalogName: string;
+  group?: string;
+  storeName?: string;
+}

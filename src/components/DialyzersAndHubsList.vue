@@ -25,7 +25,7 @@
 <script>
 import { computed } from 'vue'
 import { useRootStore } from 'src/stores/store';
-import { handbookItemsDialyzersAndHubs } from '../constants/constants';
+import { handbookItemsDialyzersAndHubs } from '../constants/catalog-names';
 import ReferenceDialog from "../components/ReferenceDialog.vue"
 export default {
     name: 'DialyzersAndHubsList',
@@ -80,4 +80,4 @@ export default {
     flex-direction: column;
     justify-content: space-between;
 }
-</style>
+</style>../constants/catalog-names

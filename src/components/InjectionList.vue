@@ -32,7 +32,7 @@
 import { useRootStore } from 'src/stores/store';
 import { ref } from "vue";
 import { injections, } from '../constants/item-program';
-import { handbookItemsInjection } from '../constants/constants'
+import { handbookItemsInjection } from '../constants/catalog-names'
 import ReferenceDialog from "../components/ReferenceDialog.vue"
 export default {
     name: 'InjectionList',
@@ -62,7 +62,7 @@ export default {
         const isItemActive = ( arrayStore ) => {
             if ( !selectedInjection.value ) return true; // Если инъекция не выбрана, все элементы не активны
             if ( selectedInjection.value === "Игла" ) {
-                console.log( selectedInjection.value );
+
                 // Если выбрана инъекция "Игла", активируем элементы с catalogName "Иглы" и "Типы игл"
                 return arrayStore.catalogName === "Иглы" || arrayStore.catalogName === "Типы игл";
             }
@@ -112,4 +112,4 @@ export default {
     // border: 1px solid red;
 
 }
-</style>
+</style>../constants/catalog-names
