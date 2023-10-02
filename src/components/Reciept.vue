@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import { icons } from "../constants/constants"
+import { icons } from "../constants/icons-items"
 import { prescription } from "../stores/arrayStore"
 import { watch } from "vue"
 export default {

@@ -1,8 +1,12 @@
+import { deskBook } from "../constants/deskBook-items";
+
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { createArrayStore } from "./arrayStore";
-import { handbookItems, deskBook } from "../constants/constants";
-import { prescription, afterArray } from "./arrayStore";
+// import { handbookItems, deskBook } from "../constants/constants";
+
+import { handbookItems } from "../constants/handBook-items";
+import { prescription, afterArray, homeArray } from "./arrayStore";
 import { createDeskBookStore } from "./deskBookStore";
 
 export const useRootStore = defineStore("root", () => {
@@ -113,9 +117,19 @@ export const useRootStore = defineStore("root", () => {
   });
 
   const sessionDataDoses = ref({
-    drugDoses: null, // Выбранный бикарбонат
-    methodRoute: null,
+    drugDoses: "", // Выбранный бикарбонат
+    methodRoute: "",
     drugs: null,
+  });
+
+  const sessionHomeDoses = ref({
+    drugDosesHome: "", // Выбранный бикарбонат
+    methodRouteHome: "",
+    freguencyHome: "",
+    drugsHome: "",
+    startDateHome: ref(""),
+    endDateHome: ref(""),
+    quantityHome: ref(""),
   });
   const addSessionDataToAfterArray = () => {
     const sessionDataObject = {
@@ -127,14 +141,29 @@ export const useRootStore = defineStore("root", () => {
       startDate: startDate.value,
       endDate: endDate.value,
       quantity: selectedDays.value.length,
-    }; // Обратите внимание на удаление запятой в этой строке
+    };
 
     // Добавьте объект sessionDataObject в afterArray
     afterArray.value.push(sessionDataObject);
   };
 
-  const numberOfDays = ref([1, 2, 3, 4, 5, 6, 7]);
+  const addSessionDataToHomeArray = () => {
+    const sessionDataObject = {
+      id: Date.now().toString(),
+      drugsHome: sessionHomeDoses.value.drugsHome,
+      drugDosesHome: sessionHomeDoses.value.drugDosesHome,
+      methodRouteHome: sessionHomeDoses.value.methodRouteHome,
+      freguencyHome: sessionHomeDoses.value.freguencyHome,
+      startDateHome: sessionHomeDoses.value.startDateHome,
+      endDateHome: sessionHomeDoses.value.endDateHome,
+      quantityHome: sessionHomeDoses.value.quantityHome,
+    };
 
+    // Добавьте объект sessionDataObject в afterArray
+    homeArray.value.push(sessionDataObject);
+  };
+
+  const numberOfDays = ref([1, 2, 3, 4, 5, 6, 7]);
   const selectedDays = ref([]);
 
   const toggleDay = (day) => {
@@ -148,13 +177,6 @@ export const useRootStore = defineStore("root", () => {
 
   const startDate = ref("");
   const endDate = ref("");
-  // const setSelectedDays = () => {
-  //   afterArray.value.push(selectedDays.value);
-  // };
-
-  // const addDates = () => {
-  //   afterArray.value.push(startDate.value, endDate.value);
-  // };
 
   return {
     selectedProgram,
@@ -172,9 +194,9 @@ export const useRootStore = defineStore("root", () => {
     selectedDays,
     numberOfDays,
     toggleDay,
-    // setSelectedDays,
     startDate,
     endDate,
-    // addDates,
+    sessionHomeDoses,
+    addSessionDataToHomeArray,
   };
 });

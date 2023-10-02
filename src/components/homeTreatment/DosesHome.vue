@@ -1,12 +1,12 @@
 <template>
     <div class="doses">
         <div v-for="(descBookStore, index) in descBookStores" :key="index">
-            <div v-if="descBookStore.array.some(item => item.group === '2') && descBookStore.catalogName === 'Дозировка'">
+            <div v-if="descBookStore.array.some(item => item.group === '3') && descBookStore.catalogName === 'Дозировка'">
                 <!-- Код для отображения Дозировки -->
                 <div class="bkr-items">
                     <div class="bkr-items-inner">
                         <q-item class="lable">{{ descBookStore.catalogName }}</q-item>
-                        <span class="items antikogulant-lable">{{ drugDoses || "Наименование" }}</span>
+                        <span class="items antikogulant-lable">{{ drugDosesHome || "Наименование" }}</span>
                     </div>
                     <q-btn class="ibtn" @click="openUnitDialog(descBookStore)">
                         <q-icon name="menu_open" />
@@ -14,12 +14,26 @@
                     <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
                 </div>
             </div>
-            <div v-if="descBookStore.array.some(item => item.group === '2') && descBookStore.catalogName === 'Путь приема'">
+            <div v-if="descBookStore.array.some(item => item.group === '3') && descBookStore.catalogName === 'Путь приема'">
                 <!-- Код для отображения Пути приема -->
                 <div class="bkr-items">
                     <div class="bkr-items-inner">
                         <q-item class="lable">{{ descBookStore.catalogName }}</q-item>
-                        <span class="items antikogulant-lable">{{ methodRoute || "Наименование" }}</span>
+                        <span class="items antikogulant-lable">{{ methodRouteHome || "Наименование" }}</span>
+                    </div>
+                    <q-btn class="ibtn" @click="openUnitDialog(descBookStore)">
+                        <q-icon name="menu_open" />
+                    </q-btn>
+                    <unit-dialog v-model="descBookStore.unitDialogVisible" :store="descBookStore" />
+                </div>
+            </div>
+            <div
+                v-if="descBookStore.array.some(item => item.group === '3') && descBookStore.catalogName === 'Кратность приема'">
+                <!-- Код для отображения Пути приема -->
+                <div class="bkr-items">
+                    <div class="bkr-items-inner">
+                        <q-item class="lable">{{ descBookStore.catalogName }}</q-item>
+                        <span class="items antikogulant-lable">{{ freguencyHome || "Наименование" }}</span>
                     </div>
                     <q-btn class="ibtn" @click="openUnitDialog(descBookStore)">
                         <q-icon name="menu_open" />
@@ -39,7 +53,7 @@ import { useRootStore } from "../../stores/store"
 import UnitDialog from '../UnitDialog.vue';
 
 export default {
-    name: 'Doses',
+    name: 'DosesHome',
     components: {
         UnitDialog,
     },
@@ -52,29 +66,31 @@ export default {
 
         const store = useRootStore();
         const descBookStores = store.deskBookStores
-
-
-        const drugDoses = ref( store.sessionDataDoses.drugDoses );
-        const methodRoute = ref( store.sessionDataDoses.methodRoute )
+        const drugDosesHome = ref( store.sessionHomeDoses.drugDosesHome );
+        const methodRouteHome = ref( store.sessionHomeDoses.methodRouteHome )
+        const freguencyHome = ref( store.sessionHomeDoses.freguencyHome )
 
         // Используем watch для отслеживания изменений в store.sessionData.unit
-        watch( () => store.sessionDataDoses.drugDoses, ( newValue ) => {
-            drugDoses.value = newValue;
+        watch(
+            [ () => store.sessionHomeDoses.drugDosesHome,
+            () => store.sessionHomeDoses.methodRouteHome,
+            () => store.sessionHomeDoses.freguencyHome ],
+            ( [ drugDosesHomeValue, methodRouteHomeValue, freguencyHomeValue ] ) => {
+                drugDosesHome.value = drugDosesHomeValue;
+                methodRouteHome.value = methodRouteHomeValue;
+                freguencyHome.value = freguencyHomeValue;
 
-            // Обновляем значение в основном компоненте
-        } );
+            }
+        );
 
-        watch( () => store.sessionDataDoses.methodRoute, ( newValue ) => {
-            methodRoute.value = newValue;
-
-        } );
 
 
 
         return {
             descBookStores,
-            drugDoses,
-            methodRoute,
+            drugDosesHome,
+            methodRouteHome,
+            freguencyHome
         }
     }
 }
@@ -86,6 +102,7 @@ export default {
 
 .doses {
     display: flex;
+    margin-bottom: 20px;
 }
 
 

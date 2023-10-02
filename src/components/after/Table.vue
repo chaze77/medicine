@@ -1,5 +1,6 @@
 <template>
     <div class="q-pa-md">
+        <p class="lable" style="margin-bottom: 20px;">Список назначений после сеансов</p>
         <q-table flat bordered :rows=afterArray :columns=columns row-key="name" hide-bottom />
     </div>
 </template>

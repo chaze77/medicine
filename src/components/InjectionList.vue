@@ -31,7 +31,8 @@
 <script>
 import { useRootStore } from 'src/stores/store';
 import { ref } from "vue";
-import { injections, handbookItemsInjection } from '../constants/constants';
+import { injections, } from '../constants/item-program';
+import { handbookItemsInjection } from '../constants/constants'
 import ReferenceDialog from "../components/ReferenceDialog.vue"
 export default {
     name: 'InjectionList',
@@ -92,15 +93,15 @@ export default {
 }
 
 .injection {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .injection-container {
     display: flex;
     flex-direction: row;
-    // border: 1px solid red;
     flex-wrap: wrap;
     gap: 5%;
+    margin-bottom: 20px;
 
 }
 

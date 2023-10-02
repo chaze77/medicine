@@ -1,6 +1,6 @@
 <template>
     <div class="program">
-        <p class="lable">Программа аппарата</p>
+        <q-item class="lable">Программа аппарата</q-item>
         <div class="buttons">
             <q-btn class="btn" v-for="program in programsList" :key="program.id" flat @click="chooseProgram(program.name)"
                 :class="{ active: program.name === selectedProgram }">
@@ -14,7 +14,7 @@
 <script>
 import { useRootStore } from 'src/stores/store';
 import { ref } from "vue";
-import { programs } from '../constants/constants';
+import { programs } from '../constants/item-program';
 export default {
     name: 'ProgramList',
     setup() {
@@ -39,6 +39,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/app.scss";
+
+.program {
+    margin-bottom: 20px;
+}
 
 .buttons {
     display: flex;

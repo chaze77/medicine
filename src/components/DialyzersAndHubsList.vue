@@ -67,13 +67,11 @@ export default {
 
 .dialyzers {
     width: 100%;
-
 }
 
 .items_block {
     display: flex;
-    gap: 2%;
-    margin-bottom: 20px;
+    gap: 2%; // margin-bottom: 20px;
 
 }
 

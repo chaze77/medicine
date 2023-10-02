@@ -5,7 +5,6 @@ interface Entry {
   id: string;
   name: string;
   category?: string;
-  // Другие поля записи, если они есть
 }
 
 // Определение типа для магазина
@@ -21,6 +20,7 @@ interface ArrayStore {
 
 export const prescription = ref<Entry[]>([]);
 export const afterArray = ref<Entry[]>([]);
+export const homeArray = ref<Entry[]>([]);
 
 export const createArrayStore = (
   initialArray: Entry[],
@@ -29,7 +29,6 @@ export const createArrayStore = (
   withInput?: boolean
 ): ArrayStore => {
   const array = ref(initialArray);
-  // Добавляем переменную для хранения inputValue
 
   const addEntry = (newEntry: Entry) => {
     newEntry.id = Date.now().toString();
@@ -54,26 +53,6 @@ export const createArrayStore = (
     }
   };
 
-  // const addToAfterArray = (selectedEntryId) => {
-  //   const selectedEntry = array.value.find(
-  //     (entry) => entry.id === selectedEntryId
-  //   );
-
-  //   // console.log("Добавляю в afterArray:", selectedEntry);
-
-  //   if (selectedEntry) {
-  //     const category = selectedEntry.category;
-
-  //     afterArray.value = afterArray.value.filter(
-  //       (item) => item.category !== category
-  //     );
-  //     afterArray.value.push(selectedEntry);
-
-  //   }
-  // };
-
-  console.log("Новый afterArray:", afterArray.value);
-
   return {
     array,
     addEntry,
@@ -82,6 +61,5 @@ export const createArrayStore = (
     storeName,
     withInput,
     addToPrescription,
-    // addToAfterArray,
   };
 };

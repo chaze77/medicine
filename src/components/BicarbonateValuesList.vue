@@ -123,6 +123,7 @@ export default {
 .bkr-container {
     display: flex;
     gap: 20px;
+    margin-bottom: 20px;
 }
 
 .bkr-container div:not(.bkr-items):nth-child(2),

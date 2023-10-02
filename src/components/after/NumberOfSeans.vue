@@ -24,8 +24,7 @@ export default {
         const { numberOfDays, toggleDay, selectedDays, } = useRootStore();
 
         watch( selectedDays, ( newSelectedDays ) => {
-            console.log( "selectedDays changed:", newSelectedDays );
-            console.log( newSelectedDays.length );
+
         } );
 
 

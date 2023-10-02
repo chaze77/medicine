@@ -7,8 +7,7 @@
 
             <div v-for="entry in items">
                 <q-item style="padding-left: 10px;" :key="entry.id" clickable
-                    @click=" entry.group === '1' ?
-                        handleUnitSelection(entry.name, entry.category) : handleUnitSelectionDoses(entry.name, entry.category)">
+                    @click="handleClick(entry.group, entry.name, entry.category)">
                     {{ entry.name }}
                 </q-item>
             </div>
@@ -16,49 +15,58 @@
         </q-card>
     </q-dialog>
 </template>
-  
+
 <script>
 import { defineComponent, ref } from 'vue';
 import { useRootStore } from "../stores/store";
 
 export default defineComponent( {
     props: {
-        // Проп для управления видимостью диалога
         modelValue: Boolean,
         store: Object
     },
 
     setup( props, { emit } ) {
         const closeDialog = () => {
-            // Используйте $emit для отправки события обновления
             emit( 'update:modelValue', false );
         };
         const items = ref( props.store.array );
-        const naming = ref( props.store.catalogName )
-        const store = useRootStore()
+        const naming = ref( props.store.catalogName );
+        const store = useRootStore();
 
-        function handleUnitSelection( enryName, category ) {
-            store.sessionData[ category ] = enryName;
+        function handleClick( group, entryName, category ) {
+            switch ( group ) {
+                case '1':
+                    handleUnitSelection( entryName, category, store.sessionData );
+                    break;
+                case '2':
+                    handleUnitSelection( entryName, category, store.sessionDataDoses );
+                    break;
+                case '3':
+                    handleUnitSelection( entryName, category, store.sessionHomeDoses );
+                    break;
+                default:
+                    break;
+            }
+
             closeDialog();
         }
 
-        function handleUnitSelectionDoses( enryName, category ) {
-            store.sessionDataDoses[ category ] = enryName;
-            closeDialog();
+        function handleUnitSelection( entryName, category, target ) {
+            target[ category ] = entryName;
         }
 
         return {
             closeDialog,
-            handleUnitSelection,
-            handleUnitSelectionDoses,
             items,
-            naming
+            naming,
+            handleClick
         };
     },
 } );
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
 .title-container {
     background-color: gray;
     padding: 20px;

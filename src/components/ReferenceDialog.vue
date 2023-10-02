@@ -94,21 +94,24 @@ export default defineComponent( {
             props.store.addToPrescription( selectedEntryId );
         };
 
-        const addToAfterArray = ( selectedEntryId, ) => {
-            props.store.addToAfterArray( selectedEntryId );
-        };
 
         const handleItemClick = ( entry ) => {
-            if ( entry.group === '1' ) {
+            switch ( entry.group ) {
+                case '1':
+                    addToPrescription( entry.id );
+                    break;
+                case '2':
+                    mainStore.sessionDataDoses.drugs = entry.name;
+                    break;
+                case '3':
+                    mainStore.sessionHomeDoses.drugsHome = entry.name;
+                    break;
+                default:
 
-                addToPrescription( entry.id );
-            } else {
-                // Добавить entry в afterArray
-                mainStore.sessionDataDoses.drugs = entry.name;
-
-                console.log( mainStore.sessionDataDoses.drugs );
+                    break;
             }
         };
+
 
         const update = mainStore.updateItem
         // function handleUnitSelection( enryName, category ) {
@@ -125,7 +128,7 @@ export default defineComponent( {
             searchText,
             filteredItems,
             addToPrescription,
-            addToAfterArray,
+            // addToAfterArray,
             handleItemClick,
             mainStore,
             update

@@ -1,67 +1,52 @@
 <template>
   <q-page class="q-pa-md d-flex flex-center justify-center">
     <div class="container">
-      <q-card-section class="title_container">
-        <p class="title">Сеанс гемодиализа</p>
-        <p class="lable">Номер месяца</p>
-      </q-card-section>
       <q-card-section>
+        <div class="title_container">
+          <p class="title">Сеанс гемодиализа</p>
+          <p class="lable">Номер месяца</p>
+        </div>
         <p class="title">Назначение сеанса гемодиализа</p>
       </q-card-section>
 
       <q-card-section>
         <ProgramList />
-      </q-card-section>
-      <q-card-section>
         <DialyzersAndHubsList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
-      </q-card-section>
-      <q-card-section>
         <injectionList :show-reference-dialog="showReferenceDialog" :get-category-name="getCategoryName" />
-      </q-card-section>
-      <q-card-section>
         <BicarbonateValuesList :open-unit-dialog="openUnitDialog" />
-      </q-card-section>
-
-      <q-card-section>
         <q-btn class="save-btn" @click="saveData">Сформировать сеанс</q-btn>
-      </q-card-section>
-      <q-card-section>
         <Reciept />
       </q-card-section>
 
-
-      <q-card-section class="title_container">
+      <q-card-section class="divider">
         <p class="title">Назначение после сеанса</p>
-      </q-card-section>
-
-      <q-card-section>
         <Medication :show-reference-dialog="showReferenceDialog" />
-      </q-card-section>
-      <!-- :get-category-name="getCategoryNameDoses" -->
-      <q-card-section>
         <Doses :open-unit-dialog="openUnitDialog" />
-      </q-card-section>
-
-      <q-card-section>
         <NumberOfSeans />
-        <Dates />
-      </q-card-section>
-      <q-card-section>
+        <Dates :startDateProp="startDate" :endDateProp="endDate" :selectedDaysProp="selectedDays"
+          @update-start-date="updateStartDate" @update-end-date="updateEndDate"
+          @update-selected-days="updateSelectedDays" />
         <q-btn class="save-btn" @click="saveAfterData">Сформировать</q-btn>
-      </q-card-section>
-      <q-card-section>
         <Table />
       </q-card-section>
+
+      <q-card-section>
+        <p class="title" style="margin-bottom: 20px">Лечение на дому</p>
+        <MedicationsHome :show-reference-dialog="showReferenceDialog" />
+        <HomeDoses :open-unit-dialog="openUnitDialog" />
+        <Dates :startDateProp="startDateHome" :endDateProp="endDateHome" @update-start-date="updateStartDateHome"
+          @update-end-date="updateEndDateHome" />
+        <q-btn class="save-btn" @click="saveHomeData">Добавить</q-btn>
+        <RecieptHome />
+      </q-card-section>
     </div>
-
-
   </q-page>
 </template>
 
 <script>
 import { useRootStore } from "../stores/store";
 
-import { prescription, afterArray } from "../stores/arrayStore/";
+import { prescription, afterArray, homeArray } from "../stores/arrayStore/";
 import Reciept from "../components/Reciept.vue";
 import ProgramList from "../components/ProgramList.vue"
 import injectionList from "../components/InjectionList.vue"
@@ -72,6 +57,10 @@ import Doses from "../components/after/Doses.vue"
 import NumberOfSeans from "../components/after/NumberOfSeans.vue"
 import Dates from "../components/after/Dates.vue"
 import Table from "../components/after/Table.vue"
+import HomeDoses from "../components/homeTreatment/DosesHome.vue"
+import MedicationsHome from "../components/homeTreatment/MedicationsHome.vue"
+import RecieptHome from "../components/homeTreatment/RecieptHome.vue"
+
 
 export default {
   name: "IndexPage",
@@ -85,11 +74,38 @@ export default {
     Doses,
     NumberOfSeans,
     Dates,
-    Table
+    Table,
+    HomeDoses,
+    MedicationsHome,
+    RecieptHome,
   },
   setup() {
 
     const store = useRootStore();
+
+    const startDate = store.startDate
+    const endDate = store.endDate
+    const selectedDays = store.selectedDays
+
+    const updateStartDate = ( newStartDate ) => {
+      store.startDate = newStartDate;
+    };
+    const updateEndDate = ( newEndDate ) => {
+      store.endDate = newEndDate;
+    };
+    const updateSelectedDays = ( newSelectedDays ) => {
+      store.selectedDays = newSelectedDays
+    }
+
+    const startDateHome = store.sessionHomeDoses.startDateHome
+    const endDateHome = store.sessionHomeDoses.endDateHome
+
+    const updateStartDateHome = ( newStartDate ) => {
+      store.sessionHomeDoses.startDateHome = newStartDate;
+    };
+    const updateEndDateHome = ( newEndDate ) => {
+      store.sessionHomeDoses.endDateHome = newEndDate;
+    };
 
 
 
@@ -103,44 +119,50 @@ export default {
     }
 
     function getCategoryName( storeName ) {
-      // console.log( 'проверка', storeName );
+
       const selectedEntry = prescription.value.find( ( item ) => item.category === storeName );
       return selectedEntry ? selectedEntry.name : null;
     }
-
-    // function getCategoryNameDoses( storeName ) {
-    //   // console.log( 'проверка', storeName );
-    //   const selectedEntry = afterArray.value.find( ( item ) => item.category === storeName );
-    //   return selectedEntry ? selectedEntry.name : null;
-    // }
 
     const saveData = () => {
       console.log( prescription.value.length );
       if ( prescription.value.length < 7 ) {
         store.addInputValueToPrescription()
         store.addSessionDataToPrescription()
-        console.log( 'done' );
+
       }
     }
 
-
     const saveAfterData = () => {
       store.addSessionDataToAfterArray()
-
-
     }
 
-    console.log( afterArray.value );
+    const saveHomeData = () => {
+      store.addSessionDataToHomeArray()
+    }
+
+
+    console.log( homeArray.value );
 
     return {
       showReferenceDialog,
       prescription,
       afterArray,
       getCategoryName,
-      // getCategoryNameDoses,
       openUnitDialog,
       saveData,
-      saveAfterData
+      saveAfterData,
+      startDate,
+      endDate,
+      selectedDays,
+      updateStartDate,
+      updateEndDate,
+      updateSelectedDays,
+      startDateHome,
+      endDateHome,
+      updateStartDateHome,
+      updateEndDateHome,
+      saveHomeData
     };
   },
 };
@@ -155,9 +177,18 @@ export default {
   justify-content: flex-start;
   align-items: center;
   gap: 20%;
+  margin-bottom: 20px;
 }
 
 .save-btn {
-  border: 1px solid grey
+  border: 1px solid grey;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+.divider {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 </style>
